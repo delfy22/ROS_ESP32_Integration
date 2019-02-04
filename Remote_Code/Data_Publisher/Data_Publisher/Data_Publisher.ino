@@ -9,9 +9,6 @@
 #include <std_msgs/MultiArrayDimension.h>
 #include <std_msgs/Float32.h>
 #include <std_msgs/Float32MultiArray.h>
-#include <Wire.h>
-#include <LCD.h>
-#include <LiquidCrystal_I2C.h>
 #include <WiFi.h>
 
 // ------------------------------------------------------------
@@ -31,31 +28,9 @@ void connectToNetwork() {
 }
 // ------------------------------------------------------------
 
-// ---------------------------------------------------------------
-// setup LCD for debugging
-#define I2C_ADDR    0x27 
-#define BACKLIGHT_PIN     3
-#define En_pin  2
-#define Rw_pin  1
-#define Rs_pin  0
-#define D4_pin  4
-#define D5_pin  5
-#define D6_pin  6
-#define D7_pin  7
-
-LiquidCrystal_I2C  lcd(I2C_ADDR,En_pin,Rw_pin,Rs_pin,D4_pin,D5_pin,D6_pin,D7_pin);
-// ---------------------------------------------------------------
-
 // Callback for subscriber, receives a 3 element Float32 array
 void sub_cb (const std_msgs::Float32MultiArray& data_rec) {
-  lcd.clear();
-  lcd.home();
   
-  // display each array element on first line of screen
-  for (int i=0; i<3; i++) {
-    lcd.print (data_rec.data[i]);
-    lcd.print(", ");
-  } 
 }
 
 
@@ -72,19 +47,8 @@ ros::NodeHandle nh;
 
   
 void setup() {
-  // Start the LCD
-  lcd.begin (16,2);
 
-  connectToNetwork();
-
- 
-  // Switch on the backlight
-  lcd.setBacklightPin(BACKLIGHT_PIN,POSITIVE);
-  lcd.setBacklight(HIGH);
-
-  // Useful to check it comes on
-  lcd.home ();
-  lcd.print("Setup");  
+  connectToNetwork(); 
 
   inc_data.data = 0.0;
 
@@ -93,10 +57,6 @@ void setup() {
   nh.getHardware()->setConnection(serverIp, serverPort);
   nh.advertise(data_pub);
   nh.subscribe(data_sub);
-
-  lcd.clear();
-  lcd.home();
-  lcd.print("Setup Complete");  
 }
 
 void loop() {
@@ -107,8 +67,6 @@ void loop() {
   nh.spinOnce();
 
   // Show what data we're publishing
-  lcd.setCursor (0,1);
-  lcd.print(inc_data.data);
 
   delay(500);
 }
