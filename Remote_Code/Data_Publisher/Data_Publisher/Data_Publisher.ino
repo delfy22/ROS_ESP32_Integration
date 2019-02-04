@@ -1,5 +1,5 @@
-//#define ROSSERIAL_ARDUINO_TCP_WIFI // To use Wifi comms, use this definition
-#define ESP32_USE_USB // To use USB comms, use this definition
+#define ROSSERIAL_ARDUINO_TCP_WIFI // To use Wifi comms, use this definition
+//#define ESP32_USE_USB // To use USB comms, use this definition
 
 #include <HardwareSerial.h>
 #include <ros.h>
@@ -46,13 +46,13 @@ ros::NodeHandle nh;
   
 void setup() {
 
-//  connectToNetwork(); 
+  connectToNetwork(); // Uncomment for Wifi comms
 
   inc_data.data = 0.0;
 
   // Initalise node, advertise the pub and subscribe the sub
   nh.initNode();
-//  nh.getHardware()->setConnection(serverIp, serverPort); // Uncomment for Wifi comms
+  nh.getHardware()->setConnection(serverIp, serverPort); // Uncomment for Wifi comms
   nh.advertise(data_pub);
   nh.subscribe(data_sub);
 }
