@@ -1,9 +1,7 @@
-#define ROSSERIAL_ARDUINO_TCP_WIFI
+//#define ROSSERIAL_ARDUINO_TCP_WIFI // To use Wifi comms, use this definition
+#define ESP32_USE_USB // To use USB comms, use this definition
 
-#if defined(ARDUINO_ARCH_ESP32)
-  #include <analogWrite.h>
-#endif
-
+#include <HardwareSerial.h>
 #include <ros.h>
 #include <std_msgs/MultiArrayLayout.h>
 #include <std_msgs/MultiArrayDimension.h>
@@ -48,13 +46,13 @@ ros::NodeHandle nh;
   
 void setup() {
 
-  connectToNetwork(); 
+//  connectToNetwork(); 
 
   inc_data.data = 0.0;
 
   // Initalise node, advertise the pub and subscribe the sub
   nh.initNode();
-  nh.getHardware()->setConnection(serverIp, serverPort);
+//  nh.getHardware()->setConnection(serverIp, serverPort); // Uncomment for Wifi comms
   nh.advertise(data_pub);
   nh.subscribe(data_sub);
 }
