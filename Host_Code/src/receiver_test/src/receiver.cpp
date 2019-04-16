@@ -26,13 +26,16 @@ int main(int argc, char **argv) {
 	ros::Rate loop_rate(2);
 
 	while (ros::ok() ) {
-		coord.data += 1.0;
+		//coord.data += 1.0;
 
 		coord_array.data.clear();
 
-		for (int i=0; i<3; i++) {
-			coord_array.data.push_back(coord.data + i);
-		}
+		//for (int i=0; i<3; i++) {
+		//	coord_array.data.push_back(coord.data + i);
+		//}
+		coord_array.data.push_back (1.0);
+		coord_array.data.push_back (0.0);
+		coord_array.data.push_back (1.0);
 
 		pub.publish(coord_array);
 		ros::spinOnce();

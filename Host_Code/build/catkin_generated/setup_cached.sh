@@ -7,5 +7,4 @@
 # new environment variables
 
 # modified environment variables
-export PKG_CONFIG_PATH="/home/henry/Documents/GitHub/ROS_ESP32_Integration/Host_Code/devel/lib/pkgconfig:$PKG_CONFIG_PATH"
 export PWD="/home/henry/Documents/GitHub/ROS_ESP32_Integration/Host_Code/build"
